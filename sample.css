@@ -74,15 +74,15 @@ input {
   overflow-y: scroll;
 }
 .mydivheader {
-  width: 100%;
+  width: 50%;
   height: 81%;
 }
 
 
 
-@media (max-width: 100%) {
+@media (max-width: 50%) {
   .mydivheader {
-    width: 100%;
+    width: 50%;
     height: 81%;
   }
 }
