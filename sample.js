@@ -7,6 +7,10 @@ var localTracks = {
   videoTrack: null,
   audioTrack: null
 };
+var remoteTracks = {
+  videoTrack: null,
+  audioTrack: null
+};
 var localTrackState = {
   videoTrackEnabled: true,
   audioTrackEnabled: true
@@ -18,7 +22,7 @@ var options = {
   channel: "farbe",
   uid: null,
   token: null,
-  role: "audience" // host or audience
+  role: "host" // host or audience
 };
 
 $("#host-join").click(function (e) {
@@ -115,10 +119,13 @@ async function subscribe(user, mediaType) {
     const player = $(`
       <div id="player-wrapper-${uid}">
         <p class="player-name">remoteUser(${uid})</p>
-        <div id="player-${uid}" class="player"></div>
+        <div id="player-${uid}" class="remote-playerlist"></div>
       </div>
     `);
     $("#remote-playerlist").append(player);
+   // remoteTracks.audioTrack = await AgoraRTC.createMicrophoneAudioTrack();
+    //remoteTracks.videoTrack = await AgoraRTC.createCameraVideoTrack();
+    //remoteTracks.videoTrack.play(`player-${uid}`);
     user.videoTrack.play(`player-${uid}`);
   }
   if (mediaType === 'audio') {
