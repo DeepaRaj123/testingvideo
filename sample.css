@@ -30,7 +30,7 @@ input {
 }
 
 .player {
-  width: 100%;
+  width: 50%;
   height: 81%;
 }
 
@@ -85,6 +85,13 @@ input {
   border-style: solid;
   border-color: green; 
   border-top: transparent;
+}
+.remote-playerlist
+{
+  background-color: green;
+  border: hotpink;
+  width: 500px;
+  height: 500px;
 }
 .sample{
   background-color: red;
