@@ -53,15 +53,18 @@
   <!-- Title -->
   <div class="container-fluid banner">
     <p class="banner-text">Live Streaming</p>
+
   </div>
 
   <div class="container">
 
-   
+
 
     <!-- Streams -->
     <div class="row video-group">
+
       <div class="col">
+
         <p id="local-player-name" class="player-name"></p>
         <div id="local-player" class="player"></div>
         <form id="join-form" name="join-form" class="mt-4">
@@ -79,14 +82,17 @@
             </button>
             <button id="leave" type="button" class="btn btn-live btn-sm" disabled>Leave</button>
             <Img id="fullscreen" type="button" class="btn btn-live btn-sm" disabled src="./assets/img/icons8-expand-98 (1).png" width=40 height="=40"  onclick="openFullscreen();"></button>
+
+          </div>
+          <div class="w-100"></div>
+          <div class="col">
+            <div id="remote-playerlist" width=50 height=50></div>
     
           </div>
         </form>
       </div>
-      <div class="w-100"></div>
-      <div class="col">
-        <div id="remote-playerlist" width=50 height=50></div>
-      </div>
+  
+
     </div>
 
   </div>
