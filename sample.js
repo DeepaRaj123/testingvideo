@@ -79,8 +79,8 @@ async function join() {
     showMuteButton();
     // play local video track
     localTracks.videoTrack.play("local-player");
-    $("#local-player-name").text(`localTrack(${options.uid})`);
-    // publish local tracks to channel
+  var myData = localStorage['email'];
+   $("#local-player-name").text(myData);    // publish local tracks to channel
     await client.publish(Object.values(localTracks));
     console.log("Successfully published.");
   }
