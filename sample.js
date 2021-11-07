@@ -85,6 +85,7 @@ async function join() {
     console.log("Successfully published.");
   }
 }
+/*
 // Make the DIV element draggable:
 dragElement(document.getElementById("mydiv"));
 
@@ -127,7 +128,7 @@ function dragElement(elmnt) {
     document.onmouseup = null;
     document.onmousemove = null;
   }
-}
+}*/
 async function leave() {
   for (trackName in localTracks) {
     var track = localTracks[trackName];
