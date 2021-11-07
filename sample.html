@@ -91,7 +91,7 @@
 <div id="mydiv">
   <!-- Include a header DIV with the same name as the draggable DIV, followed by "header" -->
   <div id="mydivheader"></div>
-
+ <button id="close">Click to close</button>
 </div>
     </div>
 
@@ -106,6 +106,10 @@
   <script src="https://download.agora.io/sdk/release/AgoraRTC_N.js"></script>
   <script src="sample.js"></script>
 <script>
+
+   document.querySelector("#close").addEventListener("click",()=>{
+    document.querySelector("#mydiv").style.height = "200px";
+  } )
     var elem = document.querySelector(".video-group");
   function openFullscreen() {
     if(fullscreen)
