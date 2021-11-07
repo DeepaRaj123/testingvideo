@@ -86,8 +86,9 @@ input {
   border-color: green; 
   border-top: transparent;
 }
-.remote-playerlist
-{
-  background-color: green;
-  border: hotpink;
+.sample{
+  background-color: red;
+  width: 500px;
+  height: 500px;
+ 
 }
