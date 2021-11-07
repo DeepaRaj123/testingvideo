@@ -61,7 +61,6 @@
       <!-- Input Field -->
       <div class="row join-info-group">
         <div class="col-sm">
-          <p class="join-info-text">Channel</p>
          
         </div>
       </div>
@@ -76,6 +75,8 @@
           Mute Video
         </button>
         <button id="leave" type="button" class="btn btn-live btn-sm" disabled>Leave</button>
+        <Img id="fullscreen" type="button" class="btn btn-live btn-sm" disabled src="./assets/img/icons8-expand-98 (1).png" width=40 height="=40"  onclick="openFullscreen();"></button>
+
       </div>
     </form>
 
@@ -101,7 +102,37 @@
   </script>
   <script src="https://download.agora.io/sdk/release/AgoraRTC_N.js"></script>
   <script src="sample.js"></script>
-
+<script>
+    var elem = document.querySelector(".video-group");
+  function openFullscreen() {
+    if(fullscreen)
+    {
+      document.querySelector(".player").style.height = "90%";
+      document.querySelector(".player").style.marginTop = "0px";
+  
+    if (elem.requestFullscreen) {
+      elem.requestFullscreen();
+    } else if (elem.webkitRequestFullscreen) { /* Safari */
+      elem.webkitRequestFullscreen();
+    } else if (elem.msRequestFullscreen) { /* IE11 */
+      elem.msRequestFullscreen();
+    }
+    fullscreen = false;
+  }
+  else{
+    document.querySelector(".player").style.height = "81%";
+    document.querySelector(".player").style.marginTop = "70px";
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) { /* Safari */
+      document.webkitExitFullscreen();
+    } else if (document.msExitFullscreen) { /* IE11 */
+      document.msExitFullscreen();
+    }
+    fullscreen = true;
+  }
+  }
+</script>
 </body>
 
 </html>
