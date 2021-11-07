@@ -44,6 +44,19 @@ input {
     height: 240px;
   }
 }
+.remote-playerlist {
+  width: 50%;
+  height: 320px;
+}
+
+
+
+@media (max-width: 50%) {
+  .remote-playerlist {
+    width: 50%;
+    height: 240px;
+  }
+}
 
 .btn-live {
   background-color: #2F3FB0;
