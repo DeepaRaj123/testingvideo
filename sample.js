@@ -86,13 +86,13 @@ async function join() {
   }
 }
 // Make the DIV element draggable:
-dragElement(document.getElementById("sample"));
+dragElement(document.getElementById("mydiv"));
 
 function dragElement(elmnt) {
   var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-  if (document.getElementById(remote-playerlist)) {
+  if (document.getElementById(mydivheader)) {
     // if present, the header is where you move the DIV from:
-    document.getElementById(remote-playerlist).onmousedown = dragMouseDown;
+    document.getElementById(mydivheader).onmousedown = dragMouseDown;
   } else {
     // otherwise, move the DIV from anywhere inside the DIV:
     elmnt.onmousedown = dragMouseDown;
@@ -141,7 +141,7 @@ async function leave() {
   }
   // remove remote users and player views
   remoteUsers = {};
-  $("#remote-playerlist").html("");
+  $("#mydivheader").html("");
   // leave the channel
   await client.leave();
   $("#local-player-name").text("");
@@ -161,10 +161,10 @@ async function subscribe(user, mediaType) {
     const player = $(`
       <div id="player-wrapper-${uid}">
         <p class="player-name">remoteUser(${uid})</p>
-        <div id="player-${uid}" class="remote-playerlist"></div>
+        <div id="player-${uid}" class="mydivheader"></div>
       </div>
     `);
-    $("#remote-playerlist").append(player);
+    $("#mydivheader").append(player);
    // remoteTracks.audioTrack = await AgoraRTC.createMicrophoneAudioTrack();
     //remoteTracks.videoTrack = await AgoraRTC.createCameraVideoTrack();
     //remoteTracks.videoTrack.play(`player-${uid}`);
