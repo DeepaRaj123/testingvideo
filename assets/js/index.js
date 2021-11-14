@@ -27,8 +27,9 @@ var options = {
   channel: "farbe",
   uid: null,
   token: null,
-  role: "host" // host or audience
+  role: "audience" // host or audience
 };
+
 
 
 $("#join-form").submit(async function (e) {
@@ -42,24 +43,17 @@ $("#join-form").submit(async function (e) {
     console.error(error);
   } finally {
     $("#leave").attr("disabled", false);
-    $("#end").attr("disabled", false);
-
   }
 })
 
 $("#leave").click(function (e) {
   leave();
 })
-
-$("#end").click(function (e) {
-  leave();
-})
-
 $("#share").click(async function (e) {
   e.preventDefault();
-  /*var left = document.getElementById("player");
+  var left = document.getElementById("player");
   var height = window.innerHeight;
-  left.style.height = height + "px";*/
+  left.style.height = height + "px";
   join2()
 });
 
@@ -86,7 +80,6 @@ async function join2() {
     $("#local-player-name").text("");
     $("#host-join").attr("disabled", false);
     $("#leave").attr("disabled", true);
-    $("#end").attr("disabled", true);
     $('#share').prop('disabled', true);
     hideMuteButton();
     console.log("Client successfully left channel.");
@@ -107,8 +100,6 @@ async function join2() {
         console.error(error);
       } finally {
         $("#leave").attr("disabled", false);
-        $("#end").attr("disabled", false);
-
       }
     
     $("#leave").click(function (e) {
@@ -128,7 +119,6 @@ async function join2() {
       // publish local tracks to channel
       await client.publish(Object.values(localTracks));
       console.log("Successfully published.");
-
   }
   
  else
@@ -154,8 +144,6 @@ async function join2() {
     $("#local-player-name").text("");
     $("#host-join").attr("disabled", false);
     $("#leave").attr("disabled", true);
-    $("#end").attr("disabled", true);
-
     hideMuteButton();
     console.log("Client successfully left channel.");
   
@@ -236,8 +224,6 @@ async function leave() {
   $("#local-player-name").text("");
   $("#host-join").attr("disabled", false);
   $("#leave").attr("disabled", true);
-  $("#end").attr("disabled", true);
-
   hideMuteButton();
   console.log("Client successfully left channel.");
 }
@@ -256,7 +242,6 @@ async function subscribe(user, mediaType) {
     `);
     $("#remote-playerlist").append(player);
     user.videoTrack.play(`player-${uid}`);
-
   }
   if (mediaType === 'audio') {
     user.audioTrack.play();
@@ -369,10 +354,6 @@ async function handleUserunPublished() {
   $("#host-join").attr("disabled", false);
   $("#audience-join").attr("disabled", false);
   $("#leave").attr("disabled", true);
-  $("#end").attr("disabled", true);
   hideMuteButton();
 }
  
-//$('#host-join').prop('disabled', true);
-var d = new Date();
-//alert(document.getElementById('date').innerText)
