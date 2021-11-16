@@ -3,41 +3,39 @@ var client = AgoraRTC.createClient({
   mode: "live",
   codec: "vp8"
 });
-var client1 = AgoraRTC.createClient({
-  mode: "live",
-  codec: "vp8"
-});
 var localTracks = {
   videoTrack: null,
   audioTrack: null
 };
-var screenTracks = {
-videoTrack: null,
-audioTrack: null
-};
 var localTrackState = {
   videoTrackEnabled: true,
-  audioTrackEnabled: true,
-  screenTrackEnabled:false
+  audioTrackEnabled: true
 }
 var remoteUsers = {};
 // Agora client options
 var options = {
   appid: "a6af85f840ef43108491705e2315a857",
-  channel: "farbe",
+  channel: null,
   uid: null,
   token: null,
-  role: "host" // host or audience
+  role: "audience" // host or audience
 };
 
+$("#host-join").click(function (e) {
+  options.role = "host";
+})
 
+$("#audience-join").click(function (e) {
+  options.role = "audience";
+})
 
 $("#join-form").submit(async function (e) {
   e.preventDefault();
   $("#host-join").attr("disabled", true);
+  $("#audience-join").attr("disabled", true);
   try {
     options.appid = "a6af85f840ef43108491705e2315a857";
-    options.channel = "farbe";
+    options.channel = $("#channel").val();
     await join();
   } catch (error) {
     console.error(error);
@@ -49,148 +47,28 @@ $("#join-form").submit(async function (e) {
 $("#leave").click(function (e) {
   leave();
 })
-$("#share").click(async function (e) {
-  e.preventDefault();
-  var left = document.getElementById("player");
-  var height = window.innerHeight;
-  left.style.height = height + "px";
-  join2()
-});
-
-async function join2() {
-  if(localTrackState.screenTrackEnabled)
-  {
-    localTrackState.screenTrackEnabled = false;
-
-    for (trackName in localTracks) {
-      var track = localTracks[trackName];
-      if (track) {
-        track.stop();
-        track.close();
-        $('#mic-btn').prop('disabled', true);
-        $('#video-btn').prop('disabled', true);
-        localTracks[trackName] = undefined;
-      }
-    }
-    // remove remote users and player views
-    remoteUsers = {};
-    $("#mydivheader").html("");
-    // leave the channel
-    await client.leave();
-    $("#local-player-name").text("");
-    $("#host-join").attr("disabled", false);
-    $("#leave").attr("disabled", true);
-    $('#share').prop('disabled', true);
-    hideMuteButton();
-    console.log("Client successfully left channel.");
-  
- 
-    // join the channel
-    options.uid = await client.join(options.appid, options.channel, options.token || null);
-      $('#mic-btn').prop('disabled', false);
-      $('#video-btn').prop('disabled', false);
-      $("#host-join").attr("disabled", true);
-      $('#share').prop('disabled', false);
-
-      try {
-        options.appid = "a6af85f840ef43108491705e2315a857";
-        options.channel = $("#channel").val();
-        await join();
-      } catch (error) {
-        console.error(error);
-      } finally {
-        $("#leave").attr("disabled", false);
-      }
-    
-    $("#leave").click(function (e) {
-      leave();})
-      client.on("user-published", handleUserPublished);
-      client.on("user-joined", handleUserJoined);
-      client.on("user-left", handleUserLeft);
-      client.on("user-unpublished", handleUserLeft);
-  
-      // create local audio and video tracks
-      localTracks.audioTrack = await AgoraRTC.createMicrophoneAudioTrack();
-      localTracks.videoTrack = await AgoraRTC.createCameraVideoTrack();
-      showMuteButton();
-      // play local video track
-      localTracks.videoTrack.play("local-player");
-      $("#local-player-name").text(`localTrack(${options.uid})`);
-      // publish local tracks to channel
-      await client.publish(Object.values(localTracks));
-      console.log("Successfully published.");
-  }
-  
- else
-  {
-    localTrackState.screenTrackEnabled = true;
-
-    for (trackName in localTracks) {
-      var track = localTracks[trackName];
-      if (track) {
-        track.stop();
-        track.close();
-        $('#mic-btn').prop('disabled', true);
-        $('#video-btn').prop('disabled', true);
-        $('#share').prop('disabled', true);
-        localTracks[trackName] = undefined;
-      }
-    }
-    // remove remote users and player views
-    remoteUsers = {};
-    $("#mydivheader").html("");
-    // leave the channel
-    await client.leave();
-    $("#local-player-name").text("");
-    $("#host-join").attr("disabled", false);
-    $("#leave").attr("disabled", true);
-    hideMuteButton();
-    console.log("Client successfully left channel.");
-  
-
-    // join the channel
-    options.uid = await client.join(options.appid, options.channel, options.token || null);
-      $('#mic-btn').prop('disabled', false);
-      $('#video-btn').prop('disabled', false);
-      $('#share').prop('disabled', false);
-      client.on("user-published", handleUserPublished);
-      client.on("user-joined", handleUserJoined);
-      client.on("user-left", handleUserLeft);
-      client.on("user-unpublished", handleUserLeft);
-  
-      // create local audio and video tracks
-      localTracks.audioTrack = await AgoraRTC.createMicrophoneAudioTrack();
-      localTracks.videoTrack = await AgoraRTC.createScreenVideoTrack();
-      showMuteButton();
-      // play local video track
-      localTracks.videoTrack.play("local-player");
-      $("#local-player-name").text(`localTrack(${options.uid})`);
-      // publish local tracks to channel
-      await client.publish(Object.values(localTracks));
-      console.log("Successfully published.");
-     
-    
-  }
-
-
-  
-
-
-}
 
 async function join() {
-
-  // join the channel
-  options.uid = await client.join(options.appid, options.channel, options.token || null);
-    $('#mic-btn').prop('disabled', false);
-    $('#video-btn').prop('disabled', false);
-    $('#share').prop('disabled', false);
-
+  // create Agora client
+  client.setClientRole(options.role);
+  $("#mic-btn").prop("disabled", false);
+  $("#video-btn").prop("disabled", false);
+  if (options.role === "audience") {
+    $("#mic-btn").prop("disabled", true);
+    $("#video-btn").prop("disabled", true);
+    // add event listener to play remote tracks when remote user publishs.
     client.on("user-published", handleUserPublished);
     client.on("user-joined", handleUserJoined);
     client.on("user-left", handleUserLeft);
-    client.on("user-unpublished", handleUserLeft);
-
+  }
+  // join the channel
+  options.uid = await client.join(options.appid, options.channel, options.token || null);
+  if (options.role === "host") {
+    $('#mic-btn').prop('disabled', false);
+    $('#video-btn').prop('disabled', false);
+    client.on("user-published", handleUserPublished);
+    client.on("user-joined", handleUserJoined);
+    client.on("user-left", handleUserLeft);
     // create local audio and video tracks
     localTracks.audioTrack = await AgoraRTC.createMicrophoneAudioTrack();
     localTracks.videoTrack = await AgoraRTC.createCameraVideoTrack();
@@ -201,8 +79,7 @@ async function join() {
     // publish local tracks to channel
     await client.publish(Object.values(localTracks));
     console.log("Successfully published.");
-   
-  
+  }
 }
 
 async function leave() {
@@ -218,11 +95,12 @@ async function leave() {
   }
   // remove remote users and player views
   remoteUsers = {};
-  $("#mydivheader").html("");
+  $("#remote-playerlist").html("");
   // leave the channel
   await client.leave();
   $("#local-player-name").text("");
   $("#host-join").attr("disabled", false);
+  $("#audience-join").attr("disabled", false);
   $("#leave").attr("disabled", true);
   hideMuteButton();
   console.log("Client successfully left channel.");
@@ -240,7 +118,7 @@ async function subscribe(user, mediaType) {
         <div id="player-${uid}" class="player"></div>
       </div>
     `);
-    $("#mydivheader").append(player);
+    $("#remote-playerlist").append(player);
     user.videoTrack.play(`player-${uid}`);
   }
   if (mediaType === 'audio') {
@@ -267,7 +145,6 @@ function handleUserLeft(user) {
   const id = user.uid;
   delete remoteUsers[id];
   $(`#player-wrapper-${id}`).remove();
-
 }
 
 // Mute audio click
@@ -331,32 +208,3 @@ async function unmuteVideo() {
   localTrackState.videoTrackEnabled = true;
   $("#video-btn").text("Mute Video");
 }
-
-async function handleUserunPublished() {
-  console.log("Client successfully stop sharing.");
-
-  for (trackName in screenTracks) {
-    var track = screenTracks[trackName];
-    if (track) {
-      track.stop();
-      track.close();
-      $('#mic-btn').prop('disabled', true);
-      $('#video-btn').prop('disabled', true);
-      screenTracks[trackName] = undefined;
-    }
-  }
-  // remove remote users and player views
-  remoteUsers = {};
-  $("#mydivheader").html("");
-  // leave the channel
-  await client1.leave();
-  $("#local-player-name").text("");
-  $("#host-join").attr("disabled", false);
-  $("#audience-join").attr("disabled", false);
-  $("#leave").attr("disabled", true);
-  hideMuteButton();
-}
- 
-
-
-
