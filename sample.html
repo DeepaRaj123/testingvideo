@@ -57,33 +57,37 @@
 
   <div class="container">
 
-    <form id="join-form" name="join-form" class="mt-4">
-      <!-- Input Field -->
-      <div class="row join-info-group">
-       
-      </div>
-      <!-- UI Controls -->
-      <div class="button-group mt-3">
-        <button id="host-join" type="submit" class="btn btn-live btn-sm">Join as Host</button>
-        <button id="mic-btn" type="button" class="btn btn-live btn-sm" disabled>
-          Mute Audio
-        </button>
-        <button id="video-btn" type="button" class="btn btn-live btn-sm" disabled>
-          Mute Video
-        </button>
-        <button id="leave" type="button" class="btn btn-live btn-sm" disabled>Leave</button>
-      </div>
-    </form>
-
     <!-- Streams -->
-    <div class="row video-group">
+    <div class="row video-group"  width="100%" controls id="video-group">
       <div class="col">
         <p id="local-player-name" class="player-name"></p>
-        <div id="local-player" class="player"></div>
+        <div id="local-player" class="player" width="100%" controls id="player">
+        <div class="micclass" >
+          <form id="join-form" name="join-form" class="mt-4">
+    
+            <!-- UI Controls -->
+            <div class="button-group mt-3">
+              <button id="host-join" type="submit" class="btn btn-live btn-sm" >Join Class</button>
+              <button id="mic-btn" type="button" class="btn btn-live btn-sm" disabled>
+                Mute Audio
+              </button>
+              <button id="video-btn" type="button" class="btn btn-live btn-sm" disabled>
+                Mute Video
+              </button>
+              <button id="share" type="button" class="btn btn-live btn-sm" disabled>Share Screen</button>
+              <button id="leave" type="button" class="btn btn-live btn-sm" disabled>Leave</button>
+              <button id="end" type="button" class="btn btn-live btn-sm" disabled>END</button>
+              <Img id="fullscreen" type="button" class="btn btn-live btn-sm" disabled src="./assets/img/icons8-expand-98 (1).png" width=40 height="=40"  onclick="openFullscreen();"></button>
+
+            </div>
+          </form>
+        </div>
+        </div>
       </div>
       <div class="w-100"></div>
       <div class="col">
-        <div id="remote-playerlist"></div>
+        <div id="remote-playerlist">
+        </div>
       </div>
     </div>
 
