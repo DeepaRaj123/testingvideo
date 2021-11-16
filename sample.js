@@ -15,19 +15,13 @@ var remoteUsers = {};
 // Agora client options
 var options = {
   appid: "a6af85f840ef43108491705e2315a857",
-  channel: null,
+  channel: "farbe",
   uid: null,
   token: null,
-  role: "audience" // host or audience
+  role: "host" // host or audience
 };
 
-$("#host-join").click(function (e) {
-  options.role = "host";
-})
 
-$("#audience-join").click(function (e) {
-  options.role = "audience";
-})
 
 $("#join-form").submit(async function (e) {
   e.preventDefault();
@@ -35,7 +29,6 @@ $("#join-form").submit(async function (e) {
   $("#audience-join").attr("disabled", true);
   try {
     options.appid = "a6af85f840ef43108491705e2315a857";
-    options.channel = $("#channel").val();
     await join();
   } catch (error) {
     console.error(error);
@@ -53,14 +46,7 @@ async function join() {
   client.setClientRole(options.role);
   $("#mic-btn").prop("disabled", false);
   $("#video-btn").prop("disabled", false);
-  if (options.role === "audience") {
-    $("#mic-btn").prop("disabled", true);
-    $("#video-btn").prop("disabled", true);
-    // add event listener to play remote tracks when remote user publishs.
-    client.on("user-published", handleUserPublished);
-    client.on("user-joined", handleUserJoined);
-    client.on("user-left", handleUserLeft);
-  }
+
   // join the channel
   options.uid = await client.join(options.appid, options.channel, options.token || null);
   if (options.role === "host") {
