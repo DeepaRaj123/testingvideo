@@ -42,7 +42,7 @@
     integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
     integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-  <link rel="stylesheet" href="sample.css">
+  <link rel="stylesheet" href="assets/css/index.css">
   <link rel="icon" href="assets/img/favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png" type="image/png">
 
@@ -52,47 +52,43 @@
 
   <!-- Title -->
   <div class="container-fluid banner">
-    <p class="banner-text">Testing</p>
-
+    <p class="banner-text">Live Streaming</p>
   </div>
 
   <div class="container">
 
-
+    <form id="join-form" name="join-form" class="mt-4">
+      <!-- Input Field -->
+      <div class="row join-info-group">
+        <div class="col-sm">
+          <p class="join-info-text">Channel</p>
+          <input id="channel" type="text" placeholder="Enter Channel Name" required class="form-control">
+        </div>
+      </div>
+      <!-- UI Controls -->
+      <div class="button-group mt-3">
+        <button id="host-join" type="submit" class="btn btn-live btn-sm">Join as Host</button>
+        <button id="audience-join" type="submit" class="btn btn-live btn-sm">Join as Audience</button>
+        <button id="mic-btn" type="button" class="btn btn-live btn-sm" disabled>
+          Mute Audio
+        </button>
+        <button id="video-btn" type="button" class="btn btn-live btn-sm" disabled>
+          Mute Video
+        </button>
+        <button id="leave" type="button" class="btn btn-live btn-sm" disabled>Leave</button>
+      </div>
+    </form>
 
     <!-- Streams -->
     <div class="row video-group">
-
-
+      <div class="col">
         <p id="local-player-name" class="player-name"></p>
         <div id="local-player" class="player"></div>
-        <form id="join-form" name="join-form" class="mt-4">
-          <!-- Input Field -->
-        
-          <!-- UI Controls -->
-          <div class="button-group mt-3">
-            <button id="host-join" type="submit" class="btn btn-live btn-sm">Join as Host</button>
-            <button id="audience-join" type="submit" class="btn btn-live btn-sm">Join as Audience</button>
-            <button id="mic-btn" type="button" class="btn btn-live btn-sm" disabled>
-              Mute Audio
-            </button>
-            <button id="video-btn" type="button" class="btn btn-live btn-sm" disabled>
-              Mute Video
-            </button>
-            <button id="leave" type="button" class="btn btn-live btn-sm" disabled>Leave</button>
-            <Img id="fullscreen" type="button" class="btn btn-live btn-sm" disabled src="./assets/img/icons8-expand-98 (1).png" width=40 height="=40"  ></button>
-
-          </div>
-         
-         
-        </form>
-  
-  <!-- Draggable DIV -->
-<div id="mydiv">
-  <!-- Include a header DIV with the same name as the draggable DIV, followed by "header" -->
-  <div id="mydivheader"></div>
- <button id="close">Click to close</button>
-</div>
+      </div>
+      <div class="w-100"></div>
+      <div class="col">
+        <div id="remote-playerlist"></div>
+      </div>
     </div>
 
   </div>
@@ -104,42 +100,8 @@
     integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous">
   </script>
   <script src="https://download.agora.io/sdk/release/AgoraRTC_N.js"></script>
-  <script src="sample.js"></script>
-<script>
+  <script src="assets/js/index.js"></script>
 
-   document.querySelector("#close").addEventListener("click",()=>{
-    document.querySelector("#mydiv").style.height = "200px";
-  } )
-    var elem = document.querySelector(".video-group");
-  function openFullscreen() {
-    if(fullscreen)
-    {
-      document.querySelector(".player").style.height = "90%";
-      document.querySelector(".player").style.marginTop = "0px";
-  
-    if (elem.requestFullscreen) {
-      elem.requestFullscreen();
-    } else if (elem.webkitRequestFullscreen) { /* Safari */
-      elem.webkitRequestFullscreen();
-    } else if (elem.msRequestFullscreen) { /* IE11 */
-      elem.msRequestFullscreen();
-    }
-    fullscreen = false;
-  }
-  else{
-    document.querySelector(".player").style.height = "81%";
-    document.querySelector(".player").style.marginTop = "70px";
-    if (document.exitFullscreen) {
-      document.exitFullscreen();
-    } else if (document.webkitExitFullscreen) { /* Safari */
-      document.webkitExitFullscreen();
-    } else if (document.msExitFullscreen) { /* IE11 */
-      document.msExitFullscreen();
-    }
-    fullscreen = true;
-  }
-  }
-</script>
 </body>
 
 </html>
