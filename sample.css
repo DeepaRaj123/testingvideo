@@ -44,7 +44,34 @@ input {
     height: 240px;
   }
 }
-
+.player{
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin-top: 70px;
+ 
+}
+.player{
+  border-style: solid;
+  border-color: green; 
+  border-bottom: transparent;
+  background-color: black;
+  opacity: .9;
+}
+.player>.micclass{
+  background-color: white;
+  color: #fff;
+  opacity: 1;
+  height: 70px;
+  position: absolute;
+  top: 100%;
+  width: 100%;
+  bottom: 0;
+  align-items: center;
+  border-style: solid;
+  border-color: green; 
+  border-top: transparent;
+}
 .btn-live {
   background-color: #2F3FB0;
   color: white;
